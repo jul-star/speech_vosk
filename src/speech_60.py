@@ -21,10 +21,14 @@ def main():
 
     print("Starting 60-second recording...")
     print(f"Output file: {output_file}")
-    print("Audio file: wav/recording.wav")
+    print(f"Audio file: wav/recording.wav")
 
-    result = subprocess.run(cmd)
-    return result.returncode
+    try:
+        result = subprocess.run(cmd)
+        return result.returncode
+    except KeyboardInterrupt:
+        print("\nRecording interrupted by user")
+        return 1
 
 
 if __name__ == "__main__":

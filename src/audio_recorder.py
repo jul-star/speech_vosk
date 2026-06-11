@@ -2,9 +2,37 @@
 
 import wave
 from pathlib import Path
+from typing import Optional
 
 import numpy as np
 import sounddevice as sd
+
+
+def calculate_audio_level(wav_path: str) -> Optional[float]:
+    """Calculate RMS level of a WAV file.
+
+    Args:
+        wav_path: Path to WAV file
+
+    Returns:
+        RMS level as percentage (0-100) or None if file not found
+    """
+    try:
+        with wave.open(str(wav_path), "rb") as wf:
+            data = wf.readframes(wf.getnframes())
+            # Convert to numpy array
+            import struct
+            fmt = "h" * (len(data) // 2)  # 16-bit signed int
+            samples = np.array(struct.unpack(fmt, data), dtype=np.float32)
+            # Normalize to 0-1 range (16-bit audio: -32768 to 32767)
+            samples = samples / 32768.0
+            # Calculate RMS
+            rms = np.sqrt(np.mean(samples ** 2))
+            # Convert to percentage (typical speech RMS is 0.01-0.3)
+            level_percent = min(rms * 1000, 100)  # Scale for readability
+            return level_percent
+    except Exception:
+        return None
 
 
 class AudioRecorder:

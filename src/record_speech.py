@@ -7,8 +7,12 @@ import sys
 import time
 from pathlib import Path
 
-from src.audio_recorder import AudioRecorder
-from src.speech_recognizer import SpeechRecognizer
+try:
+    from .audio_recorder import AudioRecorder, calculate_audio_level
+    from .speech_recognizer import SpeechRecognizer
+except ImportError:
+    from audio_recorder import AudioRecorder, calculate_audio_level
+    from speech_recognizer import SpeechRecognizer
 
 
 def parse_args():
@@ -80,6 +84,19 @@ def main():
     audio_path = recorder.save_to_file(args.audio)
     print(f"Audio saved to: {audio_path}")
 
+    # Show audio level
+    level = calculate_audio_level(str(audio_path))
+    if level is not None:
+        if level < 5:
+            level_msg = f"Level: {level:.1f}% (too quiet - check microphone)"
+        elif level > 80:
+            level_msg = f"Level: {level:.1f}% (too loud - reduce volume)"
+        else:
+            level_msg = f"Level: {level:.1f}% (good)"
+        print(level_msg)
+    else:
+        print("Level: N/A (could not calculate)")
+
     # Initialize recognizer
     print("Recognizing speech...")
     try:
@@ -87,12 +104,14 @@ def main():
             model_path=args.model,
             language=args.language
         )
+        print(f"Using language: {args.language}")
     except Exception as e:
         print(f"Error initializing recognizer: {e}")
         print("Please install Vosk model: pip install vosk")
         sys.exit(1)
 
     # Recognize speech
+    print("Recognizing speech...")
     result = recognizer.recognize_file(str(audio_path))
 
     # Parse JSON result
@@ -110,7 +129,15 @@ def main():
         f.write(text)
 
     print(f"Recognized text saved to: {output_path}")
-    print(f"Text: {text}")
+    
+    if text.strip():
+        print(f"Text: {text}")
+    else:
+        print("Warning: No speech was recognized. Possible reasons:")
+        print("  - No speech was recorded")
+        print("  - Vosk model not found or incorrect language")
+        print("  - Audio quality issues (check microphone)")
+        print(f"  - Raw result: {result[:100] if result else 'empty'}")
 
     return 0
 

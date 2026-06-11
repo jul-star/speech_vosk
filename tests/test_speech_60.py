@@ -27,11 +27,12 @@ class TestSpeech60Main:
         assert result == 0
         mock_run.assert_called_once()
         call_args = mock_run.call_args[0][0]
-        assert call_args[1] == "record_speech.py"
-        assert call_args[2] == "--duration"
-        assert call_args[3] == "60"
-        assert call_args[4] == "--output"
-        assert call_args[5].startswith("output/result_2025_01_15_14_30.txt")
+        assert call_args[1] == "-m"
+        assert call_args[2] == "src.record_speech"
+        assert call_args[3] == "--duration"
+        assert call_args[4] == "60"
+        assert call_args[5] == "--output"
+        assert call_args[6].startswith("output/result_2025_01_15_14_30.txt")
 
     @patch("speech_60.subprocess.run")
     @patch("speech_60.datetime")
@@ -64,6 +65,6 @@ class TestSpeech60Main:
         main()
 
         call_args = mock_run.call_args[0][0]
-        output_file = call_args[5]
+        output_file = call_args[6]
         assert output_file.startswith("output/result_")
         assert output_file.endswith(".txt")
