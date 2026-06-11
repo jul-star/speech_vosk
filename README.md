@@ -44,6 +44,23 @@ python -m src.speech_60
 
 Output: `output/result_YYYY_MM_DD_HH_MM.txt`
 
+### Quick 300-Second (5-Minute) Recording
+
+```bash
+python -m src.speech_300
+```
+
+Output: `output/result_300_YYYY_MM_DD_HH_MM.txt`
+
+### Windows Batch Files
+
+Double-click or run from command prompt:
+
+```cmd
+speech_60.bat    # 60-second recording
+speech_300.bat   # 300-second recording
+```
+
 ### Command Line Arguments
 
 | Argument | Default | Description |
@@ -63,20 +80,24 @@ Output: `output/result_YYYY_MM_DD_HH_MM.txt`
 │   ├── audio_recorder.py      # Audio recording module
 │   ├── speech_recognizer.py   # Speech recognition module
 │   ├── record_speech.py       # Main recording script
-│   └── speech_60.py           # 60-second recording wrapper
+│   ├── speech_60.py           # 60-second recording wrapper
+│   └── speech_300.py          # 300-second recording wrapper
 ├── tests/
 │   ├── conftest.py
 │   ├── test_audio_recorder.py
 │   ├── test_speech_recognizer.py
 │   ├── test_record_speech.py
-│   └── test_speech_60.py
+│   ├── test_speech_60.py
+│   └── test_speech_300.py
 ├── wav/                       # Audio files (auto-created)
 ├── output/                    # Text output files (auto-created)
 ├── doc/                       # Documentation
 ├── pyproject.toml             # Project configuration
 ├── ruff.toml                  # Linter configuration
 ├── KODA.md                    # KODA AI configuration
-└── README.md                  # This file
+├── README.md                  # This file
+├── speech_60.bat              # Windows shortcut for 60s recording
+└── speech_300.bat             # Windows shortcut for 300s recording
 ```
 
 ## Development
