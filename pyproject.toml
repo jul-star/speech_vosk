@@ -1,0 +1,53 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "speech-vosk"
+version = "0.1.0"
+description = "Speech-to-text application using Vosk library for offline Russian speech recognition"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+authors = [
+    {name = "NLP-Core-Team"}
+]
+keywords = ["speech-recognition", "vosk", "offline", "russian"]
+dependencies = []
+
+[project.optional-dependencies]
+dev = [
+    "ruff>=0.1.0",
+    "pytest>=7.0",
+]
+speech = [
+    "vosk>=0.3.45",
+    "sounddevice>=0.4.6",
+    "soundfile>=0.13.0",
+    "numpy>=1.24.0",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.ruff]
+target-version = "py310"
+line-length = 120
+include = ["*.py", "**/*.py"]
+exclude = [
+    "__pycache__",
+    ".git",
+    ".venv",
+    "venv",
+    "build",
+    "dist",
+    "*.egg-info",
+]
+
+[tool.ruff.lint]
+select = ["E", "W", "F"]
+ignore = []
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]

@@ -1,0 +1,21 @@
+target-version = "py310"
+line-length = 120
+
+# Проверяем только файлы с расширением .py
+include = ["*.py", "**/*.py"]
+
+# Исключаем служебные директории
+exclude = [
+    "__pycache__",
+    ".git",
+    ".venv",
+    "venv",
+    "build",
+    "dist",
+    "*.egg-info",
+]
+
+[lint]
+select = ["E", "W", "F"]
+ignore = []
+
