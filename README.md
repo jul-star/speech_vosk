@@ -36,6 +36,8 @@ python -m src.record_speech --audio wav/my_recording.wav
 python -m src.record_speech --language en
 ```
 
+**Note:** Press `Ctrl+C` to stop recording early. Progress is shown every 30 seconds for recordings longer than 30 seconds.
+
 ### Quick 60-Second Recording
 
 ```bash
@@ -44,6 +46,8 @@ python -m src.speech_60
 
 Output: `output/result_YYYY_MM_DD_HH_MM.txt`
 
+**Note:** Press `Ctrl+C` to stop recording early. Progress is shown every 30 seconds.
+
 ### Quick 300-Second (5-Minute) Recording
 
 ```bash
@@ -51,6 +55,8 @@ python -m src.speech_300
 ```
 
 Output: `output/result_300_YYYY_MM_DD_HH_MM.txt`
+
+**Note:** Press `Ctrl+C` to stop recording early. Progress is shown every 30 seconds.
 
 ### Windows Batch Files
 

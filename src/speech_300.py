@@ -13,7 +13,8 @@ def main():
 
     cmd = [
         sys.executable,
-        "record_speech.py",
+        "-m",
+        "src.record_speech",
         "--duration", "300",
         "--output", output_file,
     ]
@@ -22,8 +23,12 @@ def main():
     print(f"Output file: {output_file}")
     print(f"Audio file: wav/recording.wav")
 
-    result = subprocess.run(cmd)
-    return result.returncode
+    try:
+        result = subprocess.run(cmd)
+        return result.returncode
+    except KeyboardInterrupt:
+        print("\nRecording interrupted by user")
+        return 1
 
 
 if __name__ == "__main__":

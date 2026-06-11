@@ -7,8 +7,8 @@ import sys
 import time
 from pathlib import Path
 
-from audio_recorder import AudioRecorder
-from speech_recognizer import SpeechRecognizer
+from src.audio_recorder import AudioRecorder
+from src.speech_recognizer import SpeechRecognizer
 
 
 def parse_args():
@@ -65,7 +65,12 @@ def main():
 
     try:
         import time
-        time.sleep(args.duration)
+        elapsed = 0
+        interval = 30  # Показать прогресс каждые 30 секунд
+        while elapsed < args.duration:
+            time.sleep(min(interval, args.duration - elapsed))
+            elapsed += interval
+            print(f"Progress: {elapsed}/{args.duration} seconds")
     except KeyboardInterrupt:
         print("\nRecording stopped by user")
     finally:

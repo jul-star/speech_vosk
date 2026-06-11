@@ -13,7 +13,8 @@ def main():
 
     cmd = [
         sys.executable,
-        "record_speech.py",
+        "-m",
+        "src.record_speech",
         "--duration", "60",
         "--output", output_file,
     ]
